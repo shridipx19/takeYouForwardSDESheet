@@ -1,0 +1,25 @@
+class Solution {
+    void recPowerSet(int index, int[] nums, List<Integer> temp, List<List<Integer>> powerSet) {
+        
+        powerSet.add(new ArrayList<>(temp));
+        // Loops for currentIndex till length of the list in the list
+        for (int i = index; i < nums.length; i++) {
+            // if number is duplicate for the second time
+            if (i != index && nums[i] == nums[i -1])
+                continue;
+            temp.add(nums[i]);
+            recPowerSet(i +1, nums, temp, powerSet);
+            temp.remove(temp.size() -1);    // update length of the list
+            
+        }
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        // Sort the i/p array helps to generate powerSet i.e. exlude duplicate elements
+        Arrays.sort(nums);
+        // Create powerSet list
+        List<List<Integer>> powerSet = new ArrayList<>();
+        // recursive function to get the power set
+        recPowerSet(0, nums, new ArrayList<>(), powerSet);
+        return powerSet;
+    }
+}
